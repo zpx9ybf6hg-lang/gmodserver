@@ -25,14 +25,8 @@ services:
     volumes:
       # Persist server data
       - gmod-data:/home/steam/gmodserver/garrysmod
-
-    # Resource limits (Oracle Free Tier has 1GB RAM)
-    deploy:
-      resources:
-        limits:
-          memory: 900M
-        reservations:
-          memory: 512M
+    # Resource limits removed temporarily for initial installation
+    # Will be re-enabled after first successful start
 
 volumes:
   gmod-data:
