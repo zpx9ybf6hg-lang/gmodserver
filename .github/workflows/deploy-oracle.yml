@@ -1,4 +1,3 @@
-```yaml
 name: Deploy to Oracle Cloud (Native)
 
 on:
@@ -20,14 +19,3 @@ jobs:
           script: |
             cd /home/steam/gmodserver
             sudo -u steam bash update-server.sh
-            git pull origin main
-            
-            # Restart server with Docker Compose
-            docker-compose down
-            docker-compose pull
-            docker-compose up -d
-            
-            # Show status
-            docker-compose ps
-            
-            echo "✅ GMod server deployed successfully!"
