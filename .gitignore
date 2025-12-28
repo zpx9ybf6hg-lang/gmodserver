@@ -1,0 +1,35 @@
+# Server files
+*.log
+*.dem
+*.bsp
+*.nav
+*.ain
+
+# Environment variables
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Railway
+.railway/
+
+# Temporary files
+tmp/
+temp/
+cache/
+
+# Backups
+*.bak
+*.backup
