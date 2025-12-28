@@ -1,0 +1,13 @@
+# Placeholder for custom addons
+# Place your addon folders here
+
+# Example structure:
+# addons/
+# └── my_custom_addon/
+#     ├── lua/
+#     ├── materials/
+#     ├── models/
+#     └── addon.json
+
+# Or use Steam Workshop instead by setting:
+# GMOD_WORKSHOP_COLLECTION in .env file

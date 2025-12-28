@@ -47,6 +47,34 @@ else
     echo -e "${GREEN}DarkRP already installed.${NC}"
 fi
 
+# Copy custom configuration files from GitHub
+echo -e "${YELLOW}Copying custom configuration files...${NC}"
+cd /home/steam/gmodserver
+
+# Copy DarkRP config files
+if [ -d "/home/steam/gmod-config/darkrp" ]; then
+    cp -r /home/steam/gmod-config/darkrp/* garrysmod/gamemodes/darkrp/gamemode/config/ 2>/dev/null || true
+    echo -e "${GREEN}DarkRP config files copied${NC}"
+fi
+
+# Copy custom addons
+if [ -d "/home/steam/gmod-config/addons" ]; then
+    cp -r /home/steam/gmod-config/addons/* garrysmod/addons/ 2>/dev/null || true
+    echo -e "${GREEN}Custom addons copied${NC}"
+fi
+
+# Copy Lua scripts
+if [ -d "/home/steam/gmod-config/lua" ]; then
+    cp -r /home/steam/gmod-config/lua/* garrysmod/lua/ 2>/dev/null || true
+    echo -e "${GREEN}Lua scripts copied${NC}"
+fi
+
+# Copy additional cfg files
+if [ -d "/home/steam/gmod-config/cfg" ]; then
+    cp -r /home/steam/gmod-config/cfg/* garrysmod/cfg/ 2>/dev/null || true
+    echo -e "${GREEN}Config files copied${NC}"
+fi
+
 # Build workshop collection parameter
 WORKSHOP_PARAMS=""
 if [ ! -z "$WORKSHOP_COLLECTION" ] && [ ! -z "$WORKSHOP_API_KEY" ]; then

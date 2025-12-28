@@ -1,0 +1,7 @@
+# Additional server configuration files
+# Place any extra .cfg files here
+
+# Common files:
+# - autoexec.cfg - Runs automatically on server start
+# - banned_user.cfg - List of banned users
+# - banned_ip.cfg - List of banned IPs
