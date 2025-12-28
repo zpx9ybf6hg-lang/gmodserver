@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  gmod-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gmod-darkrp
+    restart: unless-stopped
+
+    ports:
+      # GMod server port (UDP for game, TCP for RCON)
+      - "27015:27015/udp"
+      - "27015:27015/tcp"
+
+    environment:
+      - GMOD_HOSTNAME=${GMOD_HOSTNAME:-My DarkRP Server}
+      - GMOD_MAP=${GMOD_MAP:-rp_downtown_v4c_v2}
+      - GMOD_MAXPLAYERS=${GMOD_MAXPLAYERS:-16}
+      - GMOD_GAMEMODE=${GMOD_GAMEMODE:-darkrp}
+      - PORT=27015
+      - GMOD_WORKSHOP_API_KEY=${GMOD_WORKSHOP_API_KEY:-}
+      - GMOD_WORKSHOP_COLLECTION=${GMOD_WORKSHOP_COLLECTION:-}
+
+    volumes:
+      # Persist server data
+      - gmod-data:/home/steam/gmodserver/garrysmod
+
+    # Resource limits (Oracle Free Tier has 1GB RAM)
+    deploy:
+      resources:
+        limits:
+          memory: 900M
+        reservations:
+          memory: 512M
+
+volumes:
+  gmod-data:
+    driver: local

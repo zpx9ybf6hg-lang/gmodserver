@@ -1,0 +1,39 @@
+name: Deploy to Oracle Cloud
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Deploy to Oracle Cloud VM
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.ORACLE_HOST }}
+          username: ${{ secrets.ORACLE_USERNAME }}
+          key: ${{ secrets.ORACLE_SSH_KEY }}
+          port: 22
+          script: |
+            # Navigate to server directory
+            cd ~/gmodserver || exit 1
+            
+            # Pull latest changes
+            git pull origin main
+            
+            # Restart server with Docker Compose
+            docker-compose down
+            docker-compose pull
+            docker-compose up -d
+            
+            # Show status
+            docker-compose ps
+            
+            echo "✅ GMod server deployed successfully!"
