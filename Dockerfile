@@ -33,12 +33,8 @@ RUN chown -R steam:steam /home/steam
 # Switch to steam user
 USER steam
 
-# Install Garry's Mod Dedicated Server
-RUN /home/steam/steamcmd/steamcmd.sh \
-    +force_install_dir /home/steam/gmodserver \
-    +login anonymous \
-    +app_update 4020 validate \
-    +quit
+# Create gmodserver directory (GMod will be installed on first run)
+RUN mkdir -p /home/steam/gmodserver
 
 # Copy server configuration files
 COPY --chown=steam:steam server.cfg /home/steam/gmodserver/garrysmod/cfg/server.cfg
