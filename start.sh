@@ -4,14 +4,14 @@
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
 echo -e "${GREEN}========================================${NC}"
 echo -e "${GREEN}  Garry's Mod DarkRP Server Startup${NC}"
 echo -e "${GREEN}========================================${NC}"
 
-# Set default values if environment variables are not set
-HOSTNAME="${GMOD_HOSTNAME:-Garry's Mod DarkRP Server}"
+# Set default values
+HOSTNAME="${GMOD_HOSTNAME:-Garrys Mod DarkRP Server}"
 MAP="${GMOD_MAP:-rp_downtown_v4c_v2}"
 MAXPLAYERS="${GMOD_MAXPLAYERS:-16}"
 GAMEMODE="${GMOD_GAMEMODE:-darkrp}"
@@ -34,7 +34,7 @@ echo -e "${YELLOW}Updating server files...${NC}"
     +app_update 4020 validate \
     +quit
 
-# Install DarkRP if not present
+# Install DarkRP
 if [ ! -d "/home/steam/gmodserver/garrysmod/gamemodes/darkrp" ]; then
     echo -e "${YELLOW}Installing DarkRP...${NC}"
     cd /home/steam/gmodserver/garrysmod/gamemodes
@@ -47,54 +47,41 @@ else
     echo -e "${GREEN}DarkRP already installed.${NC}"
 fi
 
-# Copy custom configuration files from GitHub
+# Copy custom config files
 echo -e "${YELLOW}Copying custom configuration files...${NC}"
 cd /home/steam/gmodserver
 
-# Copy DarkRP config files
 if [ -d "/home/steam/gmod-config/darkrp" ]; then
     cp -r /home/steam/gmod-config/darkrp/* garrysmod/gamemodes/darkrp/gamemode/config/ 2>/dev/null || true
-    echo -e "${GREEN}DarkRP config files copied${NC}"
+    echo -e "${GREEN}DarkRP config copied${NC}"
 fi
 
-# Copy custom addons
 if [ -d "/home/steam/gmod-config/addons" ]; then
     cp -r /home/steam/gmod-config/addons/* garrysmod/addons/ 2>/dev/null || true
-    echo -e "${GREEN}Custom addons copied${NC}"
+    echo -e "${GREEN}Addons copied${NC}"
 fi
 
-# Copy Lua scripts
 if [ -d "/home/steam/gmod-config/lua" ]; then
     cp -r /home/steam/gmod-config/lua/* garrysmod/lua/ 2>/dev/null || true
     echo -e "${GREEN}Lua scripts copied${NC}"
 fi
 
-# Copy additional cfg files
 if [ -d "/home/steam/gmod-config/cfg" ]; then
     cp -r /home/steam/gmod-config/cfg/* garrysmod/cfg/ 2>/dev/null || true
     echo -e "${GREEN}Config files copied${NC}"
 fi
 
-# Build workshop collection parameter
+# Workshop params
 WORKSHOP_PARAMS=""
 if [ ! -z "$WORKSHOP_COLLECTION" ] && [ ! -z "$WORKSHOP_API_KEY" ]; then
-    echo -e "${YELLOW}Workshop collection configured: $WORKSHOP_COLLECTION${NC}"
+    echo -e "${YELLOW}Workshop collection: $WORKSHOP_COLLECTION${NC}"
     WORKSHOP_PARAMS="+host_workshop_collection $WORKSHOP_COLLECTION -authkey $WORKSHOP_API_KEY"
 fi
 
-# Start the server
+# Start server
 echo -e "${GREEN}Starting Garry's Mod Server...${NC}"
 echo -e "${GREEN}========================================${NC}"
 
 cd /home/steam/gmodserver
 
-./srcds_run \
-    -game garrysmod \
-    -console \
-    -norestart \
-    +maxplayers $MAXPLAYERS \
-    +hostname "$HOSTNAME" \
-    +map $MAP \
-    +gamemode $GAMEMODE \
-    -port $PORT \
-    $WORKSHOP_PARAMS
+./srcds_run -game garrysmod -console -norestart +maxplayers $MAXPLAYERS +hostname "$HOSTNAME" +map $MAP +gamemode $GAMEMODE -port $PORT $WORKSHOP_PARAMS
