@@ -38,10 +38,7 @@ RUN mkdir -p /home/steam/gmodserver
 
 # Copy server configuration files
 COPY --chown=steam:steam server.cfg /home/steam/gmodserver/garrysmod/cfg/server.cfg
-COPY --chown=steam:steam start.sh /home/steam/start.sh
-
-# Make start script executable
-RUN chmod +x /home/steam/start.sh
+COPY --chown=steam:steam --chmod=755 start.sh /home/steam/start.sh
 
 # Set working directory to server
 WORKDIR /home/steam/gmodserver
